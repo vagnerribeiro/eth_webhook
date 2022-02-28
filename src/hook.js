@@ -1,9 +1,17 @@
 require('dotenv/config');
+const ReadBlockUseCase = require('./useCases/Block/ReadBlockUseCase');
 const ReadTransactionUseCase = require('./useCases/Transaction/ReadTransactionUseCase');
 const provider = require('./utils/connection');
 
-const transactions = new ReadTransactionUseCase(provider);
+const block = new ReadBlockUseCase(provider);
+const transactionUseCase = new ReadTransactionUseCase(provider);
 
-transactions.getTransaction('0x31cde37d8772e52161c2f399764631aba962d11a983df86a435f833b7d95e888').then((result) => {
-  console.log(result);
+block.lastBlockNumber().then((blockNumber) => {
+  transactionUseCase.getTransactionFromBlock(blockNumber).then((transactions) => {
+    transactions.forEach((hash) => {
+      transactionUseCase.getTransaction(hash).then((transaction) => {
+        console.log(transaction);
+      });
+    });
+  });
 });

@@ -11,6 +11,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      blockHash: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      blockNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      value: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
